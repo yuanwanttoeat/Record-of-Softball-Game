@@ -1,3 +1,16 @@
+.table-responsive {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+.table-responsive table{
+    width:100%;
+    white-space: nowrap;
+}
+
 body {
     font-family: Arial, sans-serif;
     font-size: 16px;
