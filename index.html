@@ -26,6 +26,10 @@
             <option>10 </option>
             <option>11 </option>
         </select>
+
+        <label for="playerName">Enter player name:</label>
+        <input type="text" id="playerName" name="playerName">
+
         <select id="battingDirection">
             <option>打擊方向</option>
             <option>1 (投手)</option>
@@ -37,7 +41,7 @@
             <option>7 (左外野)</option>
             <option>8 (中外野)</option>
             <option>9 (右外野)</option>
-            <option>沒碰到球 </option>
+            <option>10 (free)</option>
         </select>
         <select id="battingResult">
             <option>打擊結果</option>
@@ -61,6 +65,7 @@
             <option>3 RBI</option>
             <option>4 RBI</option>
         </select>
+
     </form>
 
 
@@ -69,21 +74,19 @@
 
     <button type="button" onclick="downloadCSV()">輸出檔案</button>
 
+    <div class="table-resposive">
+        <table id="outputTable">
+            <tr>
+                <td>棒次</td>
+                <td>選手</td>
+                <td>打擊方向</td>
+                <td>打擊結果</td>
+                <td>打點</td>
+            </tr>
 
-    <table id="outputTable">
-        <tr>
-            <td>棒次</td>
-            <td>打擊方向</td>
-            <td>打擊結果</td>
-            <td>打點</td>
-        </tr>
-        <tr>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-            <td>...</td>
-        </tr>
-    </table>
+        </table>
+    </div>
+
 
     <script>
         function displaySelection() {
@@ -91,6 +94,7 @@
             var battingDirection = document.getElementById("battingDirection").value;
             var battingResult = document.getElementById("battingResult").value;
             var RBI = document.getElementById("RBI").value;
+            var playerName = document.getElementById("playerName").value;
 
             var table = document.getElementById("outputTable");
             var row = table.insertRow(-1);
@@ -98,10 +102,13 @@
             var cell2 = row.insertCell(1);
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+
             cell1.innerHTML = battingOrder;
-            cell2.innerHTML = battingDirection;
-            cell3.innerHTML = battingResult;
-            cell4.innerHTML = RBI;
+            cell2.innerHTML = playerName;
+            cell3.innerHTML = battingDirection;
+            cell4.innerHTML = battingResult;
+            cell5.innerHTML = RBI;
         }
 
         function downloadCSV() {
@@ -128,6 +135,10 @@
             document.body.removeChild(link);
         }
 
+        function getPlayerName() {
+            var playerName = document.getElementById("playerName").value;
+            alert("Player name is: " + playerName);
+        }
     </script>
 
 </body>
