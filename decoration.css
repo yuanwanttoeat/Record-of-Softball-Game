@@ -6,21 +6,41 @@
     -ms-overflow-style: -ms-autohiding-scrollbar;
 }
 
-.table-responsive table{
-    width:100%;
+.container {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px auto;
+    width: 95vw;
+}
+
+.skip_btn {
+    margin: 3px;
+    padding: 5px;
+    background-color: gainsboro;
+    color: black;
+}
+
+table {
+    width: 80vw;
     white-space: nowrap;
+    border-collapse: collapse;
+    margin: 20px auto;
 }
 
 body {
     font-family: Arial, sans-serif;
     font-size: 16px;
     color: #333;
-    margin: 0;
     padding: 0;
 }
 
 h1 {
     margin-top: 50px;
+    text-align: center;
+}
+
+h3 {
     text-align: center;
 }
 
@@ -32,12 +52,16 @@ form {
     margin-top: 20px;
 }
 
-select {
+select, input {
     margin: 10px;
     padding: 5px;
     border-radius: 5px;
     border: none;
     box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.2);
+}
+
+input:focus, select:focus {
+    outline: none;
 }
 
 input[type="submit"] {
@@ -51,8 +75,8 @@ input[type="submit"] {
 }
 
 button {
-    margin-top: 20px;
-    padding: 10px 20px;
+    margin: 5px 0;
+    padding: 10px 15px;
     border-radius: 5px;
     border: none;
     background-color: #007bff;
@@ -60,10 +84,8 @@ button {
     cursor: pointer;
 }
 
-table {
-    margin-top: 20px;
-    border-collapse: collapse;
-    width: 100%;
+button:hover {
+    opacity: 0.8;
 }
 
 th,
@@ -78,4 +100,3 @@ th {
     color: #fff;
     font-weight: bold;
 }
-
