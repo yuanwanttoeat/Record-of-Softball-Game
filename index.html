@@ -9,7 +9,7 @@
 
 <body>
     <h1>清大聯賽紀錄</h1>
-    <p>打擊狀況</p>
+    <h3>打擊狀況</h3>
 
     <form>
         <select id="battingOrder">
@@ -27,7 +27,7 @@
             <option>11 </option>
         </select>
 
-        <label for="playerName">Enter player name:</label>
+        <label for="playerName">背號:</label>
         <input type="text" id="playerName" name="playerName">
 
         <select id="battingDirection">
@@ -70,6 +70,7 @@
 
 
 
+
     <button type="button" onclick="displaySelection()">送出資料</button>
 
     <button type="button" onclick="downloadCSV()">輸出檔案</button>
@@ -87,8 +88,84 @@
         </table>
     </div>
 
+    <h3>守備狀況</h3>
+    <form>
+        <select id="OtherbattingOrder">
+            <option>對手棒次</option>
+            <option>1 </option>
+            <option>2 </option>
+            <option>3 </option>
+            <option>4 </option>
+            <option>5 </option>
+            <option>6 </option>
+            <option>7 </option>
+            <option>8 </option>
+            <option>9 </option>
+            <option>10 </option>
+            <option>11 </option>
+        </select>
+
+        <label for="OtherplayerName">背號:</label>
+        <input type="text" id="OtherplayerName" name="OtherplayerName">
+
+        <select id="defenderPosistion">
+            <option>守備員</option>
+            <option>1 (投手)</option>
+            <option>2 (捕手)</option>
+            <option>3 (一壘)</option>
+            <option>4 (二壘)</option>
+            <option>5 (三壘)</option>
+            <option>6 (游擊)</option>
+            <option>7 (左外野)</option>
+            <option>8 (中外野)</option>
+            <option>9 (右外野)</option>
+            <option>10 (free)</option>
+        </select>
+        <select id="defendingResult">
+            <option>投球結果</option>
+            <option>GO (滾地出局)</option>
+            <option>FO (飛球出局)</option>
+            <option>FC (野手選擇)</option>
+            <option>E (對手失誤)</option>
+            <option>K (被三振)</option>
+            <option>BB (保送)</option>
+            <option>SF (高飛犧牲打)</option>
+            <option>1B (一壘安打)</option>
+            <option>2B (二壘安打)</option>
+            <option>3B (三壘安打)</option>
+            <option>HR (全壘打)</option>
+        </select>
+        <select id="OtherRBI">
+            <option>對方打點</option>
+            <option>0 RBI</option>
+            <option>1 RBI</option>
+            <option>2 RBI</option>
+            <option>3 RBI</option>
+            <option>4 RBI</option>
+        </select>
+
+    </form>
+
+    <button type="button" onclick="displaySelection1()">送出資料</button>
+
+    <button type="button" onclick="downloadCSV1()">輸出檔案</button>
+
+    <div class="table-resposive">
+        <table id="outputTable1">
+            <tr>
+                <td>對手棒次</td>
+                <td>對方選手</td>
+                <td>守備員</td>
+                <td>投球結果</td>
+                <td>對方打點</td>
+            </tr>
+
+        </table>
+    </div>
 
     <script>
+        // find all images without alternate text
+        // and give them a red border
         function displaySelection() {
             var battingOrder = document.getElementById("battingOrder").value;
             var battingDirection = document.getElementById("battingDirection").value;
@@ -111,8 +188,54 @@
             cell5.innerHTML = RBI;
         }
 
+        function displaySelection1() {
+            var battingOrder = document.getElementById("OtherbattingOrder").value;
+            var battingDirection = document.getElementById("defenderPosistion").value;
+            var battingResult = document.getElementById("defendingResult").value;
+            var RBI = document.getElementById("OtherRBI").value;
+            var playerName = document.getElementById("OtherplayerName").value;
+
+            var table = document.getElementById("outputTable1");
+            var row = table.insertRow(-1);
+            var cell1 = row.insertCell(0);
+            var cell2 = row.insertCell(1);
+            var cell3 = row.insertCell(2);
+            var cell4 = row.insertCell(3);
+            var cell5 = row.insertCell(4);
+
+            cell1.innerHTML = battingOrder;
+            cell2.innerHTML = playerName;
+            cell3.innerHTML = battingDirection;
+            cell4.innerHTML = battingResult;
+            cell5.innerHTML = RBI;
+        }
+
         function downloadCSV() {
             var table = document.getElementById("outputTable");
+            var rows = table.getElementsByTagName("tr");
+            var csv = "";
+            for (var i = 0; i < rows.length; i++) {
+                var cells = rows[i].getElementsByTagName("td");
+                for (var j = 0; j < cells.length; j++) {
+                    csv += cells[j].innerText + ",";
+                }
+                csv = csv.slice(0, -1);
+                csv += "\n";
+            }
+
+            var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+            var link = document.createElement("a");
+            var url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "table.csv");
+            link.style.visibility = "hidden";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function downloadCSV1() {
+            var table = document.getElementById("outputTable1");
             var rows = table.getElementsByTagName("tr");
             var csv = "";
             for (var i = 0; i < rows.length; i++) {
