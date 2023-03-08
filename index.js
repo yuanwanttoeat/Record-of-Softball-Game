@@ -7,7 +7,7 @@ function order_increment(order) {
     }
 }
 
-function displaySelection(type) {
+function addRecord(type) {
     if (type == "us") {
         var order = document.getElementById("battingOrder");
         var direction = document.getElementById("battingDirection").value;
@@ -23,6 +23,9 @@ function displaySelection(type) {
         var RBI = document.getElementById("OtherRBI").value;
         var playerNumber = document.getElementById("OtherplayerNumber").value;
         var table = document.getElementById("otherOutputTable");
+    }
+    if (playerNumber == "") {
+        return;
     }
     var row = table.insertRow(-1);
     var cell1 = row.insertCell(0);
@@ -51,8 +54,13 @@ function skip_order(type) {
     order_increment(order);
 }
 
-function downloadCSV() {
-    var table = document.getElementById("outputTable");
+function downloadCSV(type) {
+    if (type == "us") {
+        var table = document.getElementById("outputTable");
+    }
+    else {
+        var table = document.getElementById("otherOutputTable");
+    }
     var rows = table.getElementsByTagName("tr");
     var csv = "";
     for (var i = 0; i < rows.length; i++) {
@@ -68,38 +76,9 @@ function downloadCSV() {
     var link = document.createElement("a");
     var url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
-    link.setAttribute("download", "table.csv");
+    link.setAttribute("download", "game-report.csv");
     link.style.visibility = "hidden";
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-}
-
-function downloadCSV1() {
-    var table = document.getElementById("outputTable1");
-    var rows = table.getElementsByTagName("tr");
-    var csv = "";
-    for (var i = 0; i < rows.length; i++) {
-        var cells = rows[i].getElementsByTagName("td");
-        for (var j = 0; j < cells.length; j++) {
-            csv += cells[j].innerText + ",";
-        }
-        csv = csv.slice(0, -1);
-        csv += "\n";
-    }
-
-    var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    var link = document.createElement("a");
-    var url = URL.createObjectURL(blob);
-    link.setAttribute("href", url);
-    link.setAttribute("download", "table.csv");
-    link.style.visibility = "hidden";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-}
-
-function getplayerNumber() {
-    var playerNumber = document.getElementById("playerNumber").value;
-    alert("Player name is: " + playerNumber);
 }
