@@ -79,6 +79,9 @@ function addRecord(type) {
         var RBI = document.getElementById("RBI").value;
         var playerNumber = document.getElementById("playerNumber").value;
         var table = document.getElementById("outputTable");
+        var run = document.getElementById("UsRun");
+        var hit = document.getElementById("UsHit");
+        var error = document.getElementById("OtherError");
     }
     else {
         var order = document.getElementById("OtherbattingOrder");
@@ -87,6 +90,9 @@ function addRecord(type) {
         var RBI = document.getElementById("OtherRBI").value;
         var playerNumber = document.getElementById("OtherplayerNumber").value;
         var table = document.getElementById("otherOutputTable");
+        var run = document.getElementById("OtherRun");
+        var hit = document.getElementById("OtherHit");
+        var error = document.getElementById("UsError");
     }
     if (playerNumber == "") {
         return;
@@ -103,6 +109,14 @@ function addRecord(type) {
     cell3.innerHTML = direction;
     cell4.innerHTML = result;
     cell5.innerHTML = RBI;
+    alert(parseInt(run.innerText) + parseInt(RBI.substr(0,1)))
+    run.innerHTML = parseInt(run.innerText) + parseInt(RBI.substr(0,1));
+    if(["1B","2B","3B","HR"].includes(result.substr(0,2))){
+        hit.innerHTML = parseInt(hit.innerText) + 1;
+    }
+    if(result.substr(0,1) == "E"){
+        error.innerHTML = parseInt(error.innerText) + 1;
+    }
 
     var data = {
         order: order.value,
