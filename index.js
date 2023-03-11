@@ -109,12 +109,15 @@ function addRecord(type) {
     cell3.innerHTML = direction;
     cell4.innerHTML = result;
     cell5.innerHTML = RBI;
-    alert(parseInt(run.innerText) + parseInt(RBI.substr(0,1)))
-    run.innerHTML = parseInt(run.innerText) + parseInt(RBI.substr(0,1));
-    if(["1B","2B","3B","HR"].includes(result.substr(0,2))){
+
+    // run
+    run.innerHTML = parseInt(run.innerText) + parseInt(RBI.substr(0, 1));
+    // hit
+    if (["1B", "2B", "3B", "HR"].includes(result.substr(0, 2))) {
         hit.innerHTML = parseInt(hit.innerText) + 1;
     }
-    if(result.substr(0,1) == "E"){
+    // error
+    if (result.substr(0, 1) == "E") {
         error.innerHTML = parseInt(error.innerText) + 1;
     }
 
