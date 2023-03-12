@@ -1,5 +1,5 @@
-var us_data = [];
-var other_data = [];
+var home_data = [];
+var guest_data = [];
 
 window.onload = function () {
     read_from_cookies();
@@ -15,8 +15,8 @@ function order_increment(order) {
 }
 
 function reset_table() {
-    var table = document.getElementById("outputTable");
-    var other_table = document.getElementById("otherOutputTable");
+    var table = document.getElementById("home-output-table");
+    var other_table = document.getElementById("guest-output-table");
     var rowCount = table.rows.length;
     var other_rowCount = other_table.rows.length;
     for (var i = rowCount - 1; i > 0; i--) {
@@ -25,76 +25,77 @@ function reset_table() {
     for (var i = other_rowCount - 1; i > 0; i--) {
         other_table.deleteRow(i);
     }
-    us_data = [];
-    other_data = [];
-    document.cookie = "us_data=" + JSON.stringify(us_data);
-    document.cookie = "other_data=" + JSON.stringify(other_data);
+    home_data = [];
+    guest_data = [];
+    document.cookie = "home_data=" + JSON.stringify(home_data);
+    document.cookie = "guest_data=" + JSON.stringify(guest_data);
 }
 
 function read_from_cookies() {
-    var us_data_cookie = document.cookie.split('; ').find(row => row.startsWith('us_data='));
-    if (us_data_cookie) {
-        us_data = JSON.parse(us_data_cookie.split('=')[1]);
-        console.log(us_data)
-        for (var i = 0; i < us_data.length; i++) {
-            var table = document.getElementById("outputTable");
+    var home_data_cookie = document.cookie.split('; ').find(row => row.startsWith('home_data='));
+    if (home_data_cookie) {
+        home_data = JSON.parse(home_data_cookie.split('=')[1]);
+        console.log(home_data)
+        for (var i = 0; i < home_data.length; i++) {
+            var table = document.getElementById("home-output-table");
             var row = table.insertRow(-1);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
-            cell1.innerHTML = us_data[i]["order"];
-            cell2.innerHTML = us_data[i]["playerNumber"];
-            cell3.innerHTML = us_data[i]["direction"];
-            cell4.innerHTML = us_data[i]["result"];
-            cell5.innerHTML = us_data[i]["RBI"];
+            cell1.innerHTML = home_data[i]["order"];
+            cell2.innerHTML = home_data[i]["player_number"];
+            cell3.innerHTML = home_data[i]["direction"];
+            cell4.innerHTML = home_data[i]["result"];
+            cell5.innerHTML = home_data[i]["RBI"];
         }
     }
-    var other_data_cookie = document.cookie.split('; ').find(row => row.startsWith('other_data='));
-    if (other_data_cookie) {
-        other_data = JSON.parse(other_data_cookie.split('=')[1]);
-        for (var i = 0; i < other_data.length; i++) {
-            var table = document.getElementById("otherOutputTable");
+    var guest_data_cookie = document.cookie.split('; ').find(row => row.startsWith('guest_data='));
+    if (guest_data_cookie) {
+        guest_data = JSON.parse(guest_data_cookie.split('=')[1]);
+        for (var i = 0; i < guest_data.length; i++) {
+            var table = document.getElementById("guest-output-table");
             var row = table.insertRow(-1);
             var cell1 = row.insertCell(0);
             var cell2 = row.insertCell(1);
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
-            cell1.innerHTML = us_data["order"];
-            cell2.innerHTML = us_data["playerNumber"];
-            cell3.innerHTML = us_data["direction"];
-            cell4.innerHTML = us_data["result"];
-            cell5.innerHTML = us_data["RBI"];
+            cell1.innerHTML = home_data["order"];
+            cell2.innerHTML = home_data["player_number"];
+            cell3.innerHTML = home_data["direction"];
+            cell4.innerHTML = home_data["result"];
+            cell5.innerHTML = home_data["RBI"];
         }
     }
 }
 
-function addRecord(type) {
-    if (type == "us") {
-        var order = document.getElementById("battingOrder");
-        var direction = document.getElementById("battingDirection").value;
-        var result = document.getElementById("battingResult").value;
-        var RBI = document.getElementById("RBI").value;
-        var playerNumber = document.getElementById("playerNumber").value;
-        var table = document.getElementById("outputTable");
-        var run = document.getElementById("UsRun");
-        var hit = document.getElementById("UsHit");
-        var error = document.getElementById("OtherError");
+function addRecord(team) {
+    if (team == "home") {
+        var order = document.getElementById("home-batting-order");
+        var direction = document.getElementById("home-batting-direction").value;
+        var result = document.getElementById("home-batting-result").value;
+        var RBI = document.getElementById("home-RBI").value;
+        var player_number = document.getElementById("home-player-number").value;
+        var table = document.getElementById("home-output-table");
+        var run = document.getElementById("home-runs");
+        var hit = document.getElementById("home-hits");
+        var error = document.getElementById("guest-errors");
     }
     else {
-        var order = document.getElementById("OtherbattingOrder");
-        var direction = document.getElementById("defenderPosition").value;
-        var result = document.getElementById("defendingResult").value;
-        var RBI = document.getElementById("OtherRBI").value;
-        var playerNumber = document.getElementById("OtherplayerNumber").value;
-        var table = document.getElementById("otherOutputTable");
-        var run = document.getElementById("OtherRun");
-        var hit = document.getElementById("OtherHit");
-        var error = document.getElementById("UsError");
+        var order = document.getElementById("guest-batting-order");
+        var direction = document.getElementById("guest-batting-direction").value;
+        var result = document.getElementById("guest-batting-result").value;
+        var RBI = document.getElementById("guest-RBI").value;
+        var player_number = document.getElementById("guest-player-number").value;
+        var table = document.getElementById("guest-output-table");
+        var run = document.getElementById("guest-runs");
+        var hit = document.getElementById("guest-hits");
+        var error = document.getElementById("guest-errors");
     }
-    if (playerNumber == "") {
+
+    if (player_number == "") {
         return;
     }
     var row = table.insertRow(-1);
@@ -105,11 +106,12 @@ function addRecord(type) {
     var cell5 = row.insertCell(4);
 
     cell1.innerHTML = order.value;
-    cell2.innerHTML = playerNumber;
+    cell2.innerHTML = player_number;
     cell3.innerHTML = direction;
     cell4.innerHTML = result;
     cell5.innerHTML = RBI;
 
+    // scoreboard
     // run
     run.innerHTML = parseInt(run.innerText) + parseInt(RBI.substr(0, 1));
     // hit
@@ -123,40 +125,40 @@ function addRecord(type) {
 
     var data = {
         order: order.value,
-        playerNumber: playerNumber,
+        player_number: player_number,
         direction: direction,
         result: result,
         RBI: RBI
     };
-    if (type == "us") {
-        us_data.push(data);
-        document.cookie = "us_data=" + JSON.stringify(us_data);
+    if (team == "home") {
+        home_data.push(data);
+        document.cookie = "home_data=" + JSON.stringify(home_data);
     }
     else {
-        other_data.push(data);
-        document.cookie = "other_data=" + JSON.stringify(other_data);
+        guest_data.push(data);
+        document.cookie = "guest_data=" + JSON.stringify(guest_data);
     }
 
     order_increment(order);
 }
 
-function skip_order(type) {
+function skip_order(team) {
     event.preventDefault();
-    if (type == "us") {
-        var order = document.getElementById("battingOrder");
+    if (team == "home") {
+        var order = document.getElementById("home-batting-order");
     }
     else {
-        var order = document.getElementById("OtherbattingOrder");
+        var order = document.getElementById("guest-batting-order");
     }
     order_increment(order);
 }
 
-function downloadCSV(type) {
-    if (type == "us") {
-        var table = document.getElementById("outputTable");
+function downloadCSV(team) {
+    if (team == "home") {
+        var table = document.getElementById("home-output-table");
     }
     else {
-        var table = document.getElementById("otherOutputTable");
+        var table = document.getElementById("guest-output-table");
     }
     var rows = table.getElementsByTagName("tr");
     var csv = "";
@@ -169,7 +171,7 @@ function downloadCSV(type) {
         csv += "\n";
     }
 
-    var blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+    var blob = new Blob([csv], { team: "text/csv;charset=utf-8;" });
     var link = document.createElement("a");
     var url = URL.createObjectURL(blob);
     link.setAttribute("href", url);

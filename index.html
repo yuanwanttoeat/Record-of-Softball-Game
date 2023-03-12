@@ -12,7 +12,7 @@
 <body>
     <h1>比賽紀錄</h1>
     <button onclick="reset_table();">Reset</button>
-    <table class="scoreboard">
+    <table id="scoreboard">
         <tr>
             <td></td>
             <td>1</td>
@@ -22,6 +22,8 @@
             <td>5</td>
             <td>6</td>
             <td>7</td>
+            <td>8</td>
+            <td>9</td>
             <td>R</td>
             <td>H</td>
             <td>E</td>
@@ -35,9 +37,11 @@
             <td></td>
             <td></td>
             <td></td>
-            <td id="OtherRun">0</td>
-            <td id="OtherHit">0</td>
-            <td id="OtherError">0</td>
+            <td></td>
+            <td></td>
+            <td id="guest-runs">0</td>
+            <td id="guest-hits">0</td>
+            <td id="guest-errors">0</td>
         </tr>
         <tr>
             <td>HOME</td>
@@ -48,75 +52,83 @@
             <td></td>
             <td></td>
             <td></td>
-            <td id="UsRun">0</td>
-            <td id="UsHit">0</td>
-            <td id="UsError">0</td>
+            <td></td>
+            <td></td>
+            <td id="home-runs">0</td>
+            <td id="home-hits">0</td>
+            <td id="home-errors">0</td>
         </tr>
     </table>
     <div class="container">
         <div class="team-container">
-            <h3>打擊狀況</h3>
+            <h3>HOME</h3>
             <form>
-                <label for="battingDirection">棒次：</label>
-                <select id="battingOrder" name="battingOrder">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                </select>
-                <button onclick="skip_order('us')" class="skip_btn">Skip</button>
-
-                <label for="playerNumber">背號：</label>
-                <input type="number" id="playerNumber" name="playerNumber">
-
-                <label for="battingDirection">打擊方向：</label>
-                <select id="battingDirection" name="battingDirection">
-                    <option>1 (投手)</option>
-                    <option>2 (捕手)</option>
-                    <option>3 (一壘)</option>
-                    <option>4 (二壘)</option>
-                    <option>5 (三壘)</option>
-                    <option>6 (游擊)</option>
-                    <option>7 (左外野)</option>
-                    <option>8 (中外野)</option>
-                    <option>9 (右外野)</option>
-                    <option>10 (Free)</option>
-                </select>
-
-                <label for="battingResult">打擊結果：</label>
-                <select id="battingResult" name="battingResult">
-                    <option>GO (滾地出局)</option>
-                    <option>FO (飛球出局)</option>
-                    <option>FC (野手選擇)</option>
-                    <option>E (對手失誤)</option>
-                    <option>K (被三振)</option>
-                    <option>BB (保送)</option>
-                    <option>SF (高飛犧牲打)</option>
-                    <option>1B (一壘安打)</option>
-                    <option>2B (二壘安打)</option>
-                    <option>3B (三壘安打)</option>
-                    <option>HR (全壘打)</option>
-                </select>
-
-                <label for="RBI">打點：</label>
-                <select id="RBI" name="RBI">
-                    <option>0 RBI</option>
-                    <option>1 RBI</option>
-                    <option>2 RBI</option>
-                    <option>3 RBI</option>
-                    <option>4 RBI</option>
-                </select>
+                <div>
+                    <label for="home-batting-order">棒次：</label>
+                    <select id="home-batting-order" name="home-batting-order">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                    </select>
+                    <button onclick="skip_order('home')" class="skip_btn">Skip</button>
+                </div>
+                <div>
+                    <label for="home-player-number">背號：</label>
+                    <input type="number" id="home-player-number" name="home-player-number">
+                </div>
+                <div>
+                    <label for="home-batting-direction">打擊方向：</label>
+                    <select id="home-batting-direction" name="home-batting-direction">
+                        <option>1 (投手)</option>
+                        <option>2 (捕手)</option>
+                        <option>3 (一壘)</option>
+                        <option>4 (二壘)</option>
+                        <option>5 (三壘)</option>
+                        <option>6 (游擊)</option>
+                        <option>7 (左外野)</option>
+                        <option>8 (中外野)</option>
+                        <option>9 (右外野)</option>
+                        <option>10 (Free)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="home-batting-result">打擊結果：</label>
+                    <select id="home-batting-result" name="home-batting-result">
+                        <option>GO (滾地出局)</option>
+                        <option>FO (飛球出局)</option>
+                        <option>FC (野手選擇)</option>
+                        <option>E (對手失誤)</option>
+                        <option>K (被三振)</option>
+                        <option>BB (保送)</option>
+                        <option>SF (高飛犧牲打)</option>
+                        <option>1B (一壘安打)</option>
+                        <option>2B (二壘安打)</option>
+                        <option>3B (三壘安打)</option>
+                        <option>HR (全壘打)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="home-RBI">打點：</label>
+                    <select id="home-RBI" name="home-RBI">
+                        <option>0 RBI</option>
+                        <option>1 RBI</option>
+                        <option>2 RBI</option>
+                        <option>3 RBI</option>
+                        <option>4 RBI</option>
+                    </select>
+                </div>
             </form>
-            <button type="button" onclick="addRecord('us')">送出資料</button>
-            <button type="button" onclick="downloadCSV('us')">輸出檔案</button>
-            <table id="outputTable">
+            <button type="button" onclick="addRecord('home')">送出資料</button>
+            <button type="button" onclick="downloadCSV('home')">輸出檔案</button>
+            <table id="home-output-table">
                 <tr>
                     <td>棒次</td>
                     <td>選手</td>
@@ -128,68 +140,74 @@
         </div>
 
         <div class="team-container">
-            <h3>守備狀況</h3>
+            <h3>GUEST</h3>
             <form>
-                <label for="OtherbattingOrder">對手棒次：</label>
-                <select id="OtherbattingOrder" name="OtherbattingOrder">
-                    <option>1</option>
-                    <option>2</option>
-                    <option>3</option>
-                    <option>4</option>
-                    <option>5</option>
-                    <option>6</option>
-                    <option>7</option>
-                    <option>8</option>
-                    <option>9</option>
-                    <option>10</option>
-                    <option>11</option>
-                </select>
-                <button onclick="skip_order('op')" class="skip_btn">Skip</button>
-
-                <label for="OtherplayerNumber">背號：</label>
-                <input type="text" id="OtherplayerNumber" name="OtherplayerNumber">
-
-                <label for="defenderPosition">守備員：</label>
-                <select id="defenderPosition" name="defenderPosition">
-                    <option>1 (投手)</option>
-                    <option>2 (捕手)</option>
-                    <option>3 (一壘)</option>
-                    <option>4 (二壘)</option>
-                    <option>5 (三壘)</option>
-                    <option>6 (游擊)</option>
-                    <option>7 (左外野)</option>
-                    <option>8 (中外野)</option>
-                    <option>9 (右外野)</option>
-                    <option>10 (Free)</option>
-                </select>
-
-                <label for="defendingResult">投球結果：</label>
-                <select id="defendingResult" name="defendingResult">
-                    <option>GO (滾地出局)</option>
-                    <option>FO (飛球出局)</option>
-                    <option>FC (野手選擇)</option>
-                    <option>E (對手失誤)</option>
-                    <option>K (被三振)</option>
-                    <option>BB (保送)</option>
-                    <option>SF (高飛犧牲打)</option>
-                    <option>1B (一壘安打)</option>
-                    <option>2B (二壘安打)</option>
-                    <option>3B (三壘安打)</option>
-                    <option>HR (全壘打)</option>
-                </select>
-
-                <label for="OtherRBI">對方打點：</label>
-                <select id="OtherRBI" name="OtherRBI">
-                    <option>0 RBI</option>
-                    <option>1 RBI</option>
-                    <option>2 RBI</option>
-                    <option>3 RBI</option>
-                    <option>4 RBI</option>
-                </select>
+                <div>
+                    <label for="guest-batting-order">棒次：</label>
+                    <select id="guest-batting-order" name="guest-batting-order">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                        <option>6</option>
+                        <option>7</option>
+                        <option>8</option>
+                        <option>9</option>
+                        <option>10</option>
+                        <option>11</option>
+                    </select>
+                    <button onclick="skip_order('guest')" class="skip_btn">Skip</button>
+                </div>
+                <div>
+                    <label for="guest-player-number">背號：</label>
+                    <input type="text" id="guest-player-number" name="guest-player-number">
+                </div>
+                <div>
+                    <label for="guest-batting-direction">打擊方向：</label>
+                    <select id="guest-batting-direction" name="guest-batting-direction">
+                        <option>1 (投手)</option>
+                        <option>2 (捕手)</option>
+                        <option>3 (一壘)</option>
+                        <option>4 (二壘)</option>
+                        <option>5 (三壘)</option>
+                        <option>6 (游擊)</option>
+                        <option>7 (左外野)</option>
+                        <option>8 (中外野)</option>
+                        <option>9 (右外野)</option>
+                        <option>10 (Free)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="guest-batting-result">打擊結果：</label>
+                    <select id="guest-batting-result" name="guest-batting-result">
+                        <option>GO (滾地出局)</option>
+                        <option>FO (飛球出局)</option>
+                        <option>FC (野手選擇)</option>
+                        <option>E (對手失誤)</option>
+                        <option>K (被三振)</option>
+                        <option>BB (保送)</option>
+                        <option>SF (高飛犧牲打)</option>
+                        <option>1B (一壘安打)</option>
+                        <option>2B (二壘安打)</option>
+                        <option>3B (三壘安打)</option>
+                        <option>HR (全壘打)</option>
+                    </select>
+                </div>
+                <div>
+                    <label for="guest-RBI">打點：</label>
+                    <select id="guest-RBI" name="guest-RBI">
+                         <option>0 RBI</option>
+                        <option>1 RBI</option>
+                        <option>2 RBI</option>
+                        <option>3 RBI</option>
+                        <option>4 RBI</option>
+                    </select>
+                </div>
             </form>
-            <button type="button" onclick="addRecord('op')">送出資料</button>
-            <button type="button" onclick="downloadCSV('op')">輸出檔案</button>
-            <table id="otherOutputTable">
+            <button type="button" onclick="addRecord('guest')">送出資料</button>
+            <button type="button" onclick="downloadCSV('guest')">輸出檔案</button>
+            <table id="guest-output-table">
                 <tr>
                     <td>對手棒次</td>
                     <td>對方選手</td>

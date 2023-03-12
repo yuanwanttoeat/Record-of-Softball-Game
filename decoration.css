@@ -24,7 +24,7 @@
     color: black;
 }
 
-.scoreboard {
+#scoreboard {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     box-shadow: none;
@@ -66,8 +66,6 @@ h3 {
 form {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
     margin-top: 20px;
 }
 
