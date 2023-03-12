@@ -29,6 +29,8 @@ function reset_table() {
     guest_data = [];
     document.cookie = "home_data=" + JSON.stringify(home_data);
     document.cookie = "guest_data=" + JSON.stringify(guest_data);
+    document.getElementById("home-batting-order").value = 1;
+    document.getElementById("guest-batting-order").value = 1;
 }
 
 function read_from_cookies() {
@@ -62,7 +64,7 @@ function read_from_cookies() {
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
-            cell1.innerHTML = guest_data["order"];
+            cell1.innerHTML = guest_data[i]["order"];
             cell2.innerHTML = guest_data[i]["player_number"];
             cell3.innerHTML = guest_data[i]["direction"];
             cell4.innerHTML = guest_data[i]["result"];
@@ -158,17 +160,23 @@ function skip_order(team) {
     order_increment(order);
 }
 
-function downloadCSV(team) {
-    if (team == "home") {
-        var table = document.getElementById("home-output-table");
-    }
-    else {
-        var table = document.getElementById("guest-output-table");
-    }
-    var rows = table.getElementsByTagName("tr");
+function downloadCSV() {
     var csv = "";
-    for (var i = 0; i < rows.length; i++) {
-        var cells = rows[i].getElementsByTagName("td");
+    home_table = document.getElementById("home-output-table");
+    guest_table = document.getElementById("guest-output-table");
+    var home_rows = home_table.getElementsByTagName("tr");
+    for (var i = 0; i < home_rows.length; i++) {
+        var cells = home_rows[i].getElementsByTagName("td");
+        for (var j = 0; j < cells.length; j++) {
+            csv += cells[j].innerText + ",";
+        }
+        csv = csv.slice(0, -1);
+        csv += "\n";
+    }
+    csv += "\n";
+    var guest_rows = guest_table.getElementsByTagName("tr");
+    for (var i = 0; i < guest_rows.length; i++) {
+        var cells = guest_rows[i].getElementsByTagName("td");
         for (var j = 0; j < cells.length; j++) {
             csv += cells[j].innerText + ",";
         }

@@ -12,6 +12,7 @@
 <body>
     <h1>比賽紀錄</h1>
     <button onclick="reset_table();">Reset</button>
+    <button type="button" onclick="downloadCSV()">Export</button>
     <table id="scoreboard">
         <tr>
             <td></td>
@@ -62,7 +63,7 @@
     <div class="container">
         <div class="team-container">
             <h3>HOME</h3>
-            <form>
+            <form id="home-form">
                 <div>
                     <label for="home-batting-order">棒次：</label>
                     <select id="home-batting-order" name="home-batting-order">
@@ -127,7 +128,6 @@
                 </div>
             </form>
             <button type="button" onclick="addRecord('home')">送出資料</button>
-            <button type="button" onclick="downloadCSV('home')">輸出檔案</button>
             <table id="home-output-table">
                 <tr>
                     <td>棒次</td>
@@ -141,7 +141,7 @@
 
         <div class="team-container">
             <h3>GUEST</h3>
-            <form>
+            <form id="guest-form">
                 <div>
                     <label for="guest-batting-order">棒次：</label>
                     <select id="guest-batting-order" name="guest-batting-order">
@@ -206,14 +206,13 @@
                 </div>
             </form>
             <button type="button" onclick="addRecord('guest')">送出資料</button>
-            <button type="button" onclick="downloadCSV('guest')">輸出檔案</button>
             <table id="guest-output-table">
                 <tr>
-                    <td>對手棒次</td>
-                    <td>對方選手</td>
-                    <td>守備員</td>
-                    <td>投球結果</td>
-                    <td>對方打點</td>
+                    <td>棒次</td>
+                    <td>選手</td>
+                    <td>打擊方向</td>
+                    <td>打擊結果</td>
+                    <td>打點</td>
                 </tr>
             </table>
         </div>
