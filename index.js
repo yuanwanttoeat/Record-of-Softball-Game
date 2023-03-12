@@ -35,7 +35,6 @@ function read_from_cookies() {
     var home_data_cookie = document.cookie.split('; ').find(row => row.startsWith('home_data='));
     if (home_data_cookie) {
         home_data = JSON.parse(home_data_cookie.split('=')[1]);
-        console.log(home_data)
         for (var i = 0; i < home_data.length; i++) {
             var table = document.getElementById("home-output-table");
             var row = table.insertRow(-1);
@@ -49,6 +48,7 @@ function read_from_cookies() {
             cell3.innerHTML = home_data[i]["direction"];
             cell4.innerHTML = home_data[i]["result"];
             cell5.innerHTML = home_data[i]["RBI"];
+            scoreboard_update("home", home_data[i]["result"], home_data[i]["RBI"]);
         }
     }
     var guest_data_cookie = document.cookie.split('; ').find(row => row.startsWith('guest_data='));
@@ -62,12 +62,33 @@ function read_from_cookies() {
             var cell3 = row.insertCell(2);
             var cell4 = row.insertCell(3);
             var cell5 = row.insertCell(4);
-            cell1.innerHTML = home_data["order"];
-            cell2.innerHTML = home_data["player_number"];
-            cell3.innerHTML = home_data["direction"];
-            cell4.innerHTML = home_data["result"];
-            cell5.innerHTML = home_data["RBI"];
+            cell1.innerHTML = guest_data["order"];
+            cell2.innerHTML = guest_data[i]["player_number"];
+            cell3.innerHTML = guest_data[i]["direction"];
+            cell4.innerHTML = guest_data[i]["result"];
+            cell5.innerHTML = guest_data[i]["RBI"];
+            scoreboard_update("guest", guest_data[i]["result"], guest_data[i]["RBI"]);
         }
+    }
+}
+
+function scoreboard_update(team, result, RBI) {
+    if (team == "home") {
+        var run = document.getElementById("home-runs");
+        var hit = document.getElementById("home-hits");
+        var error = document.getElementById("guest-errors");
+    }
+    else {
+        var run = document.getElementById("guest-runs");
+        var hit = document.getElementById("guest-hits");
+        var error = document.getElementById("home-errors");
+    }
+    run.innerHTML = parseInt(run.innerText) + parseInt(RBI.substr(0, 1));
+    if (["1B", "2B", "3B", "HR"].includes(result.substr(0, 2))) {
+        hit.innerHTML = parseInt(hit.innerText) + 1;
+    }
+    if (result.substr(0, 1) == "E") {
+        error.innerHTML = parseInt(error.innerText) + 1;
     }
 }
 
@@ -79,9 +100,6 @@ function addRecord(team) {
         var RBI = document.getElementById("home-RBI").value;
         var player_number = document.getElementById("home-player-number").value;
         var table = document.getElementById("home-output-table");
-        var run = document.getElementById("home-runs");
-        var hit = document.getElementById("home-hits");
-        var error = document.getElementById("guest-errors");
     }
     else {
         var order = document.getElementById("guest-batting-order");
@@ -90,9 +108,6 @@ function addRecord(team) {
         var RBI = document.getElementById("guest-RBI").value;
         var player_number = document.getElementById("guest-player-number").value;
         var table = document.getElementById("guest-output-table");
-        var run = document.getElementById("guest-runs");
-        var hit = document.getElementById("guest-hits");
-        var error = document.getElementById("guest-errors");
     }
 
     if (player_number == "") {
@@ -111,17 +126,7 @@ function addRecord(team) {
     cell4.innerHTML = result;
     cell5.innerHTML = RBI;
 
-    // scoreboard
-    // run
-    run.innerHTML = parseInt(run.innerText) + parseInt(RBI.substr(0, 1));
-    // hit
-    if (["1B", "2B", "3B", "HR"].includes(result.substr(0, 2))) {
-        hit.innerHTML = parseInt(hit.innerText) + 1;
-    }
-    // error
-    if (result.substr(0, 1) == "E") {
-        error.innerHTML = parseInt(error.innerText) + 1;
-    }
+    scoreboard_update(team, result, RBI);
 
     var data = {
         order: order.value,
