@@ -17,7 +17,7 @@
     margin: 10px;
 }
 
-.skip_btn {
+.skip-btn {
     margin: 3px;
     padding: 5px;
     background-color: gainsboro;
@@ -29,6 +29,10 @@
     border-radius: 10px;
     box-shadow: none;
     width: 95vw;
+}
+
+#reset-btn {
+    background-color: rgb(218, 64, 64);
 }
 
 table {
