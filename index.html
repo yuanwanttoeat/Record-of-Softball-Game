@@ -13,53 +13,64 @@
     <h1>比賽紀錄</h1>
     <button onclick="reset_table();" id="reset-btn">Reset</button>
     <button type="button" onclick="downloadCSV()">Export</button>
-    <table id="scoreboard">
-        <tr>
-            <td></td>
-            <td>1</td>
-            <td>2</td>
-            <td>3</td>
-            <td>4</td>
-            <td>5</td>
-            <td>6</td>
-            <td>7</td>
-            <td>8</td>
-            <td>9</td>
-            <td>R</td>
-            <td>H</td>
-            <td>E</td>
-        </tr>
-        <tr>
-            <td>GUEST</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td id="guest-runs">0</td>
-            <td id="guest-hits">0</td>
-            <td id="guest-errors">0</td>
-        </tr>
-        <tr>
-            <td>HOME</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td id="home-runs">0</td>
-            <td id="home-hits">0</td>
-            <td id="home-errors">0</td>
-        </tr>
-    </table>
+    <div class="scoreboard-container">
+        <table id="scoreboard">
+            <tr>
+                <td></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+                <td>9</td>
+                <td>R</td>
+                <td>H</td>
+                <td>E</td>
+            </tr>
+            <tr>
+                <td>GUEST</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="guest-runs">0</td>
+                <td id="guest-hits">0</td>
+                <td id="guest-errors">0</td>
+            </tr>
+            <tr>
+                <td>HOME</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td id="home-runs">0</td>
+                <td id="home-hits">0</td>
+                <td id="home-errors">0</td>
+            </tr>
+        </table>
+        <div class="outs-container">
+            <h3>Outs</h3>
+            <!-- Red circles to represent outs -->
+            <div id="outs-display">
+                <span class="out-sign"></span>
+                <span class="out-sign"></span>
+                <span class="out-sign"></span>
+            </div>
+        </div>
+    </div>
     <div class="container">
         <div class="team-container">
             <h3>Guest</h3>

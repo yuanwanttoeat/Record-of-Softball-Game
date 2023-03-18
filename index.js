@@ -111,6 +111,17 @@ function inning_calc(out) {
     }
 }
 
+// Function to render the current number of outs in the div with id "outs-display"
+function out_render() {
+    var outsDisplay = document.getElementById("outs-display");
+    outsDisplay.children[0].style.backgroundColor = "lightgrey";
+    outsDisplay.children[1].style.backgroundColor = "lightgrey";
+    outsDisplay.children[2].style.backgroundColor = "lightgrey";
+    for (let i = 0; i < current_out; i++) {
+        outsDisplay.children[i].style.backgroundColor = "red";
+    }
+}
+
 function scoreboard_update(team, result, RBI) {
     var scoreboard = document.getElementById("scoreboard");
     if (team == "home") {
@@ -178,6 +189,8 @@ function addRecord(team) {
     scoreboard_update(team, result, RBI);
 
     inning_calc(out);
+
+    out_render();
 
     var data = {
         order: order.value,
