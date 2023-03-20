@@ -3,7 +3,6 @@ var home_data = [];
 var guest_data = [];
 var current_out = 0;
 var inning = 1;
-var inning_half = 0;
 
 window.onload = function () {
     read_from_cookies();
@@ -47,50 +46,28 @@ function reset_table() {
     }
     current_out = 0;
     inning = 1;
-    inning_half = 0;
 }
 
 function read_from_cookies() {
     var home_data_cookie = document.cookie.split('; ').find(row => row.startsWith('home_data='));
     if (home_data_cookie) {
         home_data = JSON.parse(home_data_cookie.split('=')[1]);
+        console.log(home_data)
+        var table = document.getElementById("home-output-table");
         for (var i = 0; i < home_data.length; i++) {
-            var table = document.getElementById("home-output-table");
-            var row = table.insertRow(-1);
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            var cell5 = row.insertCell(4);
-            var cell6 = row.insertCell(5);
-            cell1.innerHTML = home_data[i]["order"];
-            cell2.innerHTML = home_data[i]["player_number"];
-            cell3.innerHTML = home_data[i]["direction"];
-            cell4.innerHTML = home_data[i]["result"];
-            cell5.innerHTML = home_data[i]["RBI"];
-            cell6.innerHTML = home_data[i]["out"];
+            insertRow(table, home_data[i]["order"], home_data[i]["player_number"], home_data[i]["direction"], home_data[i]["result"], home_data[i]["RBI"], home_data[i]["out"]);
             scoreboard_update("home", home_data[i]["result"], home_data[i]["RBI"]);
             inning_calc(home_data[i]["out"]);
         }
     }
+    current_out = 0;
+    inning = 1;
     var guest_data_cookie = document.cookie.split('; ').find(row => row.startsWith('guest_data='));
     if (guest_data_cookie) {
         guest_data = JSON.parse(guest_data_cookie.split('=')[1]);
+        var table = document.getElementById("guest-output-table");
         for (var i = 0; i < guest_data.length; i++) {
-            var table = document.getElementById("guest-output-table");
-            var row = table.insertRow(-1);
-            var cell1 = row.insertCell(0);
-            var cell2 = row.insertCell(1);
-            var cell3 = row.insertCell(2);
-            var cell4 = row.insertCell(3);
-            var cell5 = row.insertCell(4);
-            var cell6 = row.insertCell(5);
-            cell1.innerHTML = guest_data[i]["order"];
-            cell2.innerHTML = guest_data[i]["player_number"];
-            cell3.innerHTML = guest_data[i]["direction"];
-            cell4.innerHTML = guest_data[i]["result"];
-            cell5.innerHTML = guest_data[i]["RBI"];
-            cell6.innerHTML = guest_data[i]["out"];
+            insertRow(table, guest_data[i]["order"], guest_data[i]["player_number"], guest_data[i]["direction"], guest_data[i]["result"], guest_data[i]["RBI"], guest_data[i]["out"]);
             scoreboard_update("guest", guest_data[i]["result"], guest_data[i]["RBI"]);
             inning_calc(guest_data[i]["out"]);
         }
@@ -101,22 +78,16 @@ function inning_calc(out) {
     current_out += parseInt(out);
     if (current_out == 3) {
         current_out = 0;
-        if (inning_half == 0) {
-            inning_half = 1;
-        }
-        else {
-            inning_half = 0;
-            inning++;
-        }
+        inning++;
     }
 }
 
 // Function to render the current number of outs in the div with id "outs-display"
 function out_render() {
     var outsDisplay = document.getElementById("outs-display");
-    outsDisplay.children[0].style.backgroundColor = "lightgrey";
-    outsDisplay.children[1].style.backgroundColor = "lightgrey";
-    outsDisplay.children[2].style.backgroundColor = "lightgrey";
+    for (let i = 0; i < 3; i++) {
+        outsDisplay.children[0].style.backgroundColor = "lightgrey";
+    }
     for (let i = 0; i < current_out; i++) {
         outsDisplay.children[i].style.backgroundColor = "red";
     }
@@ -149,6 +120,22 @@ function scoreboard_update(team, result, RBI) {
     }
 }
 
+function insertRow(table, order, player_number, direction, result, RBI, out) {
+    var row = table.insertRow(-1);
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    var cell4 = row.insertCell(3);
+    var cell5 = row.insertCell(4);
+    var cell6 = row.insertCell(5);
+    cell1.innerHTML = order;
+    cell2.innerHTML = player_number;
+    cell3.innerHTML = direction;
+    cell4.innerHTML = result;
+    cell5.innerHTML = RBI;
+    cell6.innerHTML = out;
+}
+
 function addRecord(team) {
     if (team == "home") {
         var order = document.getElementById("home-batting-order");
@@ -172,19 +159,7 @@ function addRecord(team) {
     if (player_number == "") {
         return;
     }
-    var row = table.insertRow(-1);
-    var cell1 = row.insertCell(0);
-    var cell2 = row.insertCell(1);
-    var cell3 = row.insertCell(2);
-    var cell4 = row.insertCell(3);
-    var cell5 = row.insertCell(4);
-    var cell6 = row.insertCell(5);
-    cell1.innerHTML = order.value;
-    cell2.innerHTML = player_number;
-    cell3.innerHTML = direction;
-    cell4.innerHTML = result;
-    cell5.innerHTML = RBI;
-    cell6.innerHTML = out;
+    insertRow(table, order.value, player_number, direction, result, RBI, out);
 
     scoreboard_update(team, result, RBI);
 
