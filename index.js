@@ -9,6 +9,24 @@ window.onload = function () {
     read_from_cookies();
 }
 
+function switch_visibility(ele) {
+    if (ele.style.display == "none") {
+        ele.style.display = "block";
+    }
+    else {
+        ele.style.display = "none";
+    }
+}
+
+document.getElementById("home-title").addEventListener("click", function () {
+    switch_visibility(document.getElementById("home-content"));
+});
+
+document.getElementById("guest-title").addEventListener("click", function () {
+    switch_visibility(document.getElementById("guest-content"));
+});
+
+
 function order_increment(order) {
     if (order.value == 11) {
         order.value = 1;
