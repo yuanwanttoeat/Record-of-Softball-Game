@@ -3,12 +3,13 @@
 
 簡單的~~純~~前端網頁，用來記錄棒壘球比賽的紀錄，並且可以將紀錄匯出成 CSV 檔案。
 
-目前改為使用 Golang 開發。
+目前改為使用 Golang 開發 backend。
 
 ## 使用方法
-1. 打開此網站 (http://10.10.0.83:8080/RecordPage)
-2. 輸入每一個 play
-3. 按下 Export 來匯出結果
+1. ```$ go run server.go``` # 若沒裝請參考 Go install 流程
+2. 打開此網站 (http://localhost:8080/RecordPage)
+3. 輸入每一個 play
+4. 按下 Export 來匯出結果
 
 注意：資料存在 cookie 裡面，所以在記錄過程中請不要刪除 cookie。
 
