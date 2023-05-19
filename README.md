@@ -6,25 +6,36 @@
 目前改為使用 Golang 開發 backend。
 
 ## 使用方法
-1. ```$ go run server.go``` # 若沒裝請參考 Go install 流程
-2. 打開此網站 (http://localhost:8080/RecordPage)
-3. 輸入每一個 play
-4. 按下 Export 來匯出結果
+### 本機執行
+1. `$ go run backend/server.go`，若沒裝請參考 Go install 流程
+2. `$ python -m http.server --directory frontend`
+3. 打開此網站 (http://localhost:8080)
+4. 輸入每一個 play
+5. 按下 Export 來匯出結果
 
 注意：資料存在 cookie 裡面，所以在記錄過程中請不要刪除 cookie。
 
+### 使用 docker
+1. `$ docker-compose up -d`
+2. 打開網站 (http://localhost:80)
+
 ## Go install
 - Check go version:
+
 ```
 go version
 ```
+
 - If another version of Go is installed, remove the existing version and install Go 1.17.8:
+
 ```
 sudo rm -rf /usr/local/go
 wget https://dl.google.com/go/go1.17.8.linux-amd64.tar.gz
 sudo tar -C /usr/local -zxvf go1.17.8.linux-amd64.tar.gz
 ```
+
 - If Go is not installed on your system:
+
 ```
  wget https://dl.google.com/go/go1.17.8.linux-amd64.tar.gz
  sudo tar -C /usr/local -zxvf go1.17.8.linux-amd64.tar.gz
